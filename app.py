@@ -1,5 +1,5 @@
 import os
-import requests  # <-- Add this to your imports at the top
+  # <-- Add this to your imports at the top
 from flask import Flask, render_template, request, redirect, url_for, Response
 from pymongo import MongoClient
 from bson.objectid import ObjectId
