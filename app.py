@@ -6,6 +6,29 @@ from bson.objectid import ObjectId
 import cloudinary
 import cloudinary.uploader
 
+app = Flask(__name__)
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB Limit
+
+# ==================== CLOUD ENVIRONMENT CONFIGURATION ====================
+MONGO_URI = os.environ.get('MONGO_URI', 'mongodb://localhost:27017/sprites_db')
+client = MongoClient(MONGO_URI)
+db = client['sprites_db']
+sprites_collection = db.spritesrow
+print("db connected")
+
+CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
+if CLOUDINARY_URL:
+    cloudinary.config(cloudinary_url=CLOUDINARY_URL)
+    print("cloudi... con...estblsh..")
+else:
+    cloudinary.config(
+        cloud_name = os.environ.get("CLOUD_NAME"),
+        api_key = os.environ.get("CLOUD_API_KEY"),
+        api_secret = os.environ.get("CLOUD_API_SECRET"),
+        secure = True
+    )
+# =========================================================================
+
 # ... Keep your existing setup and routes here ...
 
 @app.route('/download/<sprite_id>')
